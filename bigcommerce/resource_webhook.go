@@ -11,6 +11,7 @@ import (
 
 func resourceWebhook() *schema.Resource {
 	return &schema.Resource{
+		Description: "Provides a BigCommerce Webhook resource.",
 		CreateContext: resourceWebhookCreate,
 		ReadContext:   resourceWebhookRead,
 		UpdateContext: resourceWebhookUpdate,

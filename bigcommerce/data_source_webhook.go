@@ -12,6 +12,7 @@ import (
 
 func dataSourceWebhook() *schema.Resource {
 	return &schema.Resource{
+		Description: "Provides information about a webhook ",
 		ReadContext: dataSourceWebhookRead,
 		Schema: map[string]*schema.Schema{
 			"id": {
