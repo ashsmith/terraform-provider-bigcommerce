@@ -1,0 +1,8 @@
+.DS_Store
+terraform-provider-bigcommerce
+bin
+
+# Crash log files
+crash.log
+
+vendor
