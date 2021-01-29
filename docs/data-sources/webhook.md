@@ -3,12 +3,12 @@
 page_title: "bigcommerce_webhook Data Source - terraform-provider-bigcommerce"
 subcategory: ""
 description: |-
-  
+  Provides information about a webhook
 ---
 
 # Data Source `bigcommerce_webhook`
 
-
+Provides information about a webhook
 
 ## Example Usage
 

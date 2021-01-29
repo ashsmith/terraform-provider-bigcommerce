@@ -3,17 +3,17 @@
 page_title: "bigcommerce_webhook Resource - terraform-provider-bigcommerce"
 subcategory: ""
 description: |-
-  Create a webhook
+  Provides a BigCommerce Webhook resource.
 ---
 
 # Resource `bigcommerce_webhook`
 
-Create a webhook
+Provides a BigCommerce Webhook resource.
 
 ## Example Usage
 
 ```terraform
-resource "bigcommerce_webook" "example" {
+resource "bigcommerce_webhook" "example" {
   scope       = "store/customer/*"
   destination = "https://foo.bar/webhook"
   is_active   = true

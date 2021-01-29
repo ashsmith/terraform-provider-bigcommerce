@@ -1,4 +1,4 @@
-resource "bigcommerce_webook" "example" {
+resource "bigcommerce_webhook" "example" {
   scope       = "store/customer/*"
   destination = "https://foo.bar/webhook"
   is_active   = true
