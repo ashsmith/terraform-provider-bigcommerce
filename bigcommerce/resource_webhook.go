@@ -51,12 +51,20 @@ func resourceWebhook() *schema.Resource {
 				Type:     schema.TypeBool,
 				Required: true,
 			},
-			"headers": &schema.Schema{
-				Type:     schema.TypeMap,
+			"header": &schema.Schema{
+				Type:     schema.TypeSet,
 				Optional: true,
-				Elem: &schema.Schema{
-					Type:     schema.TypeString,
-					Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"key": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"value": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
 				},
 			},
 		},
@@ -77,13 +85,7 @@ func resourceWebhookCreate(ctx context.Context, d *schema.ResourceData, m interf
 		IsActive:    isActive,
 	}
 
-	wbHeaders := make(map[string]string)
-	headers := d.Get("headers").(map[string]interface{})
-	for key, item := range headers {
-		wbHeaders[key] = item.(string)
-	}
-
-	webhook.Headers = wbHeaders
+	webhook.Headers = formatHeaders(d)
 
 	result, err := client.Webhooks.Create(webhook)
 	if err != nil {
@@ -119,7 +121,7 @@ func resourceWebhookUpdate(ctx context.Context, d *schema.ResourceData, m interf
 
 	webhookID, _ := strconv.ParseInt(d.Id(), 10, 64)
 
-	if d.HasChange("scope") || d.HasChange("destination") || d.HasChange("is_active") || d.HasChange("headers") {
+	if d.HasChange("scope") || d.HasChange("destination") || d.HasChange("is_active") || d.HasChange("header") {
 		webhook := bigcommerce.Webhook{
 			ID:          webhookID,
 			Scope:       d.Get("scope").(string),
@@ -127,13 +129,7 @@ func resourceWebhookUpdate(ctx context.Context, d *schema.ResourceData, m interf
 			IsActive:    d.Get("is_active").(bool),
 		}
 
-		wbHeaders := make(map[string]string)
-		headers := d.Get("headers").(map[string]interface{})
-		for key, item := range headers {
-			wbHeaders[key] = item.(string)
-		}
-
-		webhook.Headers = wbHeaders
+		webhook.Headers = formatHeaders(d)
 
 		_, err := client.Webhooks.Update(webhook)
 		if err != nil {
@@ -159,4 +155,14 @@ func resourceWebhookDelete(ctx context.Context, d *schema.ResourceData, m interf
 	d.SetId("")
 
 	return diags
+}
+
+func formatHeaders(d *schema.ResourceData) map[string]string {
+	wbHeaders := make(map[string]string)
+	headers := d.Get("header").(*schema.Set).List()
+	for _, item := range headers {
+		header := item.(map[string]interface{})
+		wbHeaders[header["key"].(string)] = header["value"].(string)
+	}
+	return wbHeaders
 }

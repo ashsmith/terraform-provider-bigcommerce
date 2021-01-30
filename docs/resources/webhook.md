@@ -17,6 +17,16 @@ resource "bigcommerce_webhook" "example" {
   scope       = "store/customer/*"
   destination = "https://foo.bar/webhook"
   is_active   = true
+
+  header {
+    key   = "X-My-Header"
+    value = "myheadervalue"
+  }
+
+  header {
+    key   = "X-My-Other-Header"
+    value = "myheadervalue"
+  }
 }
 ```
 
@@ -31,7 +41,7 @@ resource "bigcommerce_webhook" "example" {
 
 ### Optional
 
-- **headers** (Map of String)
+- **header** (Block Set) (see [below for nested schema](#nestedblock--header))
 
 ### Read-only
 
@@ -40,5 +50,13 @@ resource "bigcommerce_webhook" "example" {
 - **id** (String) The ID of this resource.
 - **store_hash** (String, Sensitive)
 - **updated_at** (Number)
+
+<a id="nestedblock--header"></a>
+### Nested Schema for `header`
+
+Required:
+
+- **key** (String)
+- **value** (String)
 
 

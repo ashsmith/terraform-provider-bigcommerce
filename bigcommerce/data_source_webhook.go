@@ -15,45 +15,54 @@ func dataSourceWebhook() *schema.Resource {
 		Description: "Provides information about a webhook ",
 		ReadContext: dataSourceWebhookRead,
 		Schema: map[string]*schema.Schema{
-			"id": {
+			"id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"client_id": {
+			"client_id": &schema.Schema{
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: true,
 			},
-			"store_hash": {
+			"store_hash": &schema.Schema{
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: true,
 			},
-			"created_at": {
+			"created_at": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
-			"updated_at": {
+			"updated_at": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
-			"scope": {
+			"scope": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"destination": {
+			"destination": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"is_active": {
+			"is_active": &schema.Schema{
 				Type:     schema.TypeBool,
 				Computed: true,
 			},
-			"headers": {
-				Type:     schema.TypeMap,
-				Computed: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+			"header": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"key": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"value": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
 				},
 			},
 		},
@@ -111,7 +120,17 @@ func setWebhookData(webhook bigcommerce.Webhook, d *schema.ResourceData) diag.Di
 	if err := d.Set("is_active", webhook.IsActive); err != nil {
 		return diag.FromErr(err)
 	}
-	if err := d.Set("headers", webhook.Headers); err != nil {
+
+	// Convert webhook.Headers (map[string]string) into compatible slice: []map[string]string [{ key: "", value: ""}]
+	headers := make([]interface{}, 0)
+	for key, value := range webhook.Headers {
+		header := make(map[string]interface{})
+		header["key"] = key
+		header["value"] = value
+		headers = append(headers, header)
+	}
+
+	if err := d.Set("header", headers); err != nil {
 		return diag.FromErr(err)
 	}
 
