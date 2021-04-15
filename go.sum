@@ -57,6 +57,8 @@ github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5 h1:0CwZNZbxp69SHPd
 github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5/go.mod h1:wHh0iHkYZB8zMSxRWpUBQtwG5a7fFgvEO+odwuTv2gs=
 github.com/ashsmith/bigcommerce-api-go v0.0.0-20210124153118-67e0fe51644a h1:SmLIl4RtAb7n9wOdLAV8g1N8c2FGHu0UuVVJ+xd6UhE=
 github.com/ashsmith/bigcommerce-api-go v0.0.0-20210124153118-67e0fe51644a/go.mod h1:3DDbZsGS04WUKNzz2dTGlmFMOmtVbOhC8hZK4DKff3U=
+github.com/ashsmith/bigcommerce-api-go v0.0.0-20210127221158-7805c51a91b7 h1:54QJGrvP8zEoPby1KUcmF2VZv93NwTQ3OIDh4j7eDpY=
+github.com/ashsmith/bigcommerce-api-go v0.0.0-20210127221158-7805c51a91b7/go.mod h1:3DDbZsGS04WUKNzz2dTGlmFMOmtVbOhC8hZK4DKff3U=
 github.com/aws/aws-sdk-go v1.15.78/go.mod h1:E3/ieXAlvM0XWO57iftYVDLLvQ824smPP3ATZkfNZeM=
 github.com/aws/aws-sdk-go v1.25.3 h1:uM16hIw9BotjZKMZlX05SN2EFtaWfi/NonPKIARiBLQ=
 github.com/aws/aws-sdk-go v1.25.3/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
